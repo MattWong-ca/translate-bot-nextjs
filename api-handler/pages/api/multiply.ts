@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // if (isNaN(parsedNumber)) {
     //     return res.status(400).json({ error: 'Invalid number' });
     // }
-    const answer = await main(question)
+    const answer = await fetchFlockResponse(question)
     // SEND TO DATABASE AND CHECK IF THE NUMBER RECEIVED (USER ID) HAS A COUNT LESS THAN 10
     // CHECK USER -- ARE THEY IN DB?
     // IF YES, UPDATE COUNT BY ONE
@@ -25,35 +25,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(200).json({ answer });
 }
 
-async function main(prompt: string) {
-    console.log("Prompt:", prompt);
-  
+async function fetchFlockResponse(question: string) {
     try {
-      // Construct the request payload
-      const payload = {
-        question: prompt,
-        chat_history: [],
-        knowledge_source_id: "cluhjs7k1001mwu2coixx6v0e", // replace with your model id
-      };
-  
-      // Set the headers
-      const headers = {
-        "x-api-key": process.env.FLOCK_BOT_API_KEY, // Ensure API key is set in .env
-      };
-  
-      // Send POST request using axios
-      const response = await axios.post(
-        `${process.env.FLOCK_BOT_ENDPOINT}/chat/conversational_rag_chat`,
-        payload,
-        {
-          headers,
-        }
-      );
-  
-      // Output the response data
-    //   console.log(response.data);
-      return response.data.answer;
+        const payload = {
+            question: question,
+            chat_history: [],
+            knowledge_source_id: "cluhjs7k1001mwu2coixx6v0e",
+        };
+        const headers = {
+            "x-api-key": process.env.FLOCK_BOT_API_KEY,
+        };
+        const response = await axios.post(
+            `${process.env.FLOCK_BOT_ENDPOINT}/chat/conversational_rag_chat`,
+            payload,
+            {
+                headers,
+            }
+        );
+        return response.data.answer;
     } catch (error) {
-      console.error("Error:", error);
+        console.error("Error:", error);
     }
-  }
+}
