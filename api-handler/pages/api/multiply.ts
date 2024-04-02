@@ -8,20 +8,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }
-
     const { question } = req.body;
-    // const parsedNumber = parseInt(number, 10);
-
-    // if (isNaN(parsedNumber)) {
-    //     return res.status(400).json({ error: 'Invalid number' });
-    // }
     const answer = await fetchFlockResponse(question)
-    // SEND TO DATABASE AND CHECK IF THE NUMBER RECEIVED (USER ID) HAS A COUNT LESS THAN 10
-    // CHECK USER -- ARE THEY IN DB?
-    // IF YES, UPDATE COUNT BY ONE
-    // IF NO, ADD USER WITH COUNT = 1
-    // const result = parsedNumber * 2;
-    console.log(answer)
     return res.status(200).json({ answer });
 }
 
@@ -47,3 +35,7 @@ async function fetchFlockResponse(question: string) {
         console.error("Error:", error);
     }
 }
+// TODO: SEND TO DATABASE AND CHECK IF THE NUMBER RECEIVED (USER ID) HAS A COUNT LESS THAN 10
+    // CHECK USER -- ARE THEY IN DB?
+    // IF YES, UPDATE COUNT BY ONE
+    // IF NO, ADD USER WITH COUNT = 1
