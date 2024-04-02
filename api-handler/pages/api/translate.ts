@@ -21,10 +21,10 @@ async function fetchFlockResponse(question: string) {
             knowledge_source_id: "cluhjs7k1001mwu2coixx6v0e",
         };
         const headers = {
-            "x-api-key": process.env.FLOCK_BOT_API_KEY,
+            "x-api-key": process.env.NEXT_PUBLIC_FLOCK_BOT_API_KEY,
         };
         const response = await axios.post(
-            `${process.env.FLOCK_BOT_ENDPOINT}/chat/conversational_rag_chat`,
+            `${process.env.NEXT_PUBLIC_FLOCK_BOT_ENDPOINT}/chat/conversational_rag_chat`,
             payload,
             {
                 headers,
@@ -35,7 +35,3 @@ async function fetchFlockResponse(question: string) {
         console.error("Error:", error);
     }
 }
-// TODO: SEND TO DATABASE AND CHECK IF THE NUMBER RECEIVED (USER ID) HAS A COUNT LESS THAN 10
-    // CHECK USER -- ARE THEY IN DB?
-    // IF YES, UPDATE COUNT BY ONE
-    // IF NO, ADD USER WITH COUNT = 1
